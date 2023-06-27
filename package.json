@@ -1,21 +1,19 @@
 {
   "name": "vuetage",
   "version": "0.0.1",
-  "description": "vue2.7 + webpack5 template",
+  "description": "webpack5 + vue2.7 template",
   "scripts": {
-    "dev": "webpack serve --env development --config ./build/webpack.config.js",
-    "build": "webpack --env production --config ./build/webpack.config.js"
+    "dev": "webpack serve --env development --config ./config/webpack.config.js",
+    "build": "webpack --env production --config ./config/webpack.prod.js"
   },
   "devDependencies": {
     "babel": "^6.23.0",
-    "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "css-minimizer-webpack-plugin": "^5.0.1",
     "eslint": "^7.32.0",
     "eslint-loader": "^4.0.2",
     "html-webpack-plugin": "^5.5.3",
-    "loader": "^2.1.1",
     "postcss": "^8.4.24",
     "postcss-loader": "^7.3.3",
     "sass": "^1.63.6",

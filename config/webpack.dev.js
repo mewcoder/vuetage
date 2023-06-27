@@ -1,9 +1,7 @@
 const baseConfig = require('./webpack.common')
 const { merge } = require('webpack-merge')
-
 module.exports = merge(baseConfig(false), {
   mode: 'development',
-  devtool: 'cheap-module-source-map',
   target: 'web',
   devServer: {
     hot: 'only',

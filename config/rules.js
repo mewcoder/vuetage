@@ -16,7 +16,7 @@ const assetRules = [
   // images
   {
     test: /\.(png|jpe?g|gif|webp|avif)(\?.*)?$/,
-    type: 'asset', // file-loader - {limit} - url-loader
+    type: 'asset', // file-loader - {maxSize} - url-loader
     generator: {
       filename: 'img/[name].[hash:8][ext]'
     },
@@ -44,19 +44,27 @@ const assetRules = [
   }
 ];
 
-const getCssLoaders = isProd => {
-  const cssFinalLoader = isProd ? MiniCssExtractPlugin.loader : require.resolve('style-loader');
+const getCssLoaders = shouldExtract => {
+  const cssFinalLoader = shouldExtract
+    ? { loader: MiniCssExtractPlugin.loader }
+    : {
+        loader: require.resolve('vue-style-loader'),
+        options: {
+          sourceMap: false
+        }
+      };
 
   return [
     cssFinalLoader,
     {
       loader: require.resolve('css-loader'),
       options: {
+        sourceMap: false,
         importLoaders: 2
       }
     },
     {
-      // todo
+      // todo autoprefixer
       loader: require.resolve('postcss-loader')
     }
   ];
@@ -93,7 +101,18 @@ const vueRules = [
     test: /\.vue$/,
     use: [
       {
-        loader: require.resolve('vue-loader')
+        loader: require.resolve('vue-loader'),
+        options: {
+          compilerOptions: {
+            whitespace: 'condense' // 收缩模板中的空白字符
+          }
+        }
+      },
+      // https://github.com/vuejs/vue-loader/issues/1435#issuecomment-869074949
+      {
+        test: /\.vue$/,
+        resourceQuery: /type=style/,
+        sideEffects: true
       }
     ]
   }

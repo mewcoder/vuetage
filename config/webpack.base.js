@@ -55,6 +55,7 @@ module.exports = webpackEnv => {
     //   allowCollectingMemory: true
     // },
     optimization: {
+      realContentHash: false, // true 生成正确的内容hash
       minimizer: [new EsbuildPlugin({ target: 'es2015', css: true })]
     },
     infrastructureLogging: {

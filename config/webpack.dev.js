@@ -1,14 +1,15 @@
-const baseConfig = require('./webpack.common')
+const baseConfig = require('./webpack.base')
 const { merge } = require('webpack-merge')
-module.exports = merge(baseConfig(false), {
+module.exports = merge(baseConfig('development'), {
   mode: 'development',
-  target: 'web',
   devServer: {
-    hot: 'only',
-    port: 8080, // 端口号，工作中从3001开始，因此增加1个到3002
-    open: false, // 自动打开浏览器
-    compress: true, // 开启gzip压缩
-    historyApiFallback: true // history路径在刷新出错时重定向开启
+    client: {
+      logging: 'none'
+    },
+    open: true,
+    compress: true // gzip压缩
+    // historyApiFallback: true, // history路径在刷新出错时重定向开启
+    // static: 管理静态资源
     // proxy: { // 接口代理
     //   '/api': { // 统一api前缀都代理掉
     //     target: 'http://api.github.com', // 代理的目标地址
@@ -20,6 +21,8 @@ module.exports = merge(baseConfig(false), {
     // }
   },
   optimization: {
+    moduleIds: 'named',
     chunkIds: 'named'
-  }
+  },
+
 })

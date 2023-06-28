@@ -1,39 +1,32 @@
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
+import HelloWorld from './components/HelloWorld.vue';
+
+const obj = {
+  title: '1',
+  year: 11
+};
 </script>
 
 <template>
   <div id="app">
     <header>
-      <img
-        alt="Vue logo"
-        class="logo"
-        src="@/assets/logo.svg"
-        width="125"
-        height="125"
-      />
-
+      <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
       <div class="wrapper">
-        <HelloWorld msg="You did it!" />
+        <HelloWorld msg="Hello Vue!" :book="obj" />
         <nav>
           <router-link to="/">Home</router-link>
           <router-link to="/about">About</router-link>
         </nav>
       </div>
     </header>
-
     <router-view />
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

@@ -20,9 +20,10 @@ const moduleFileExtensions = [
   ".vue",
   ".json",
 ];
+
 module.exports = {
   appPath: resolveApp("."),
-  appEntry: resolveApp("src/main.js"),
+  appEntry: resolveApp("src/main.ts"),
   appOutput: resolveApp(outputPath), // 输出路径
   appPublic: resolveApp("public"),
   appSrc: resolveApp("src"),

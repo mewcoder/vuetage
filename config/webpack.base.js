@@ -1,43 +1,37 @@
-const pathConfig = require('./path-config');
-const { DefinePlugin } = require('webpack');
+const paths = require('./paths');
+const { DefinePlugin, ProgressPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
-const {
-  assetRules,
-  getCssRules,
-  getScssRules,
-  vueRules,
-  jsRules,
-  tsRules
-} = require('./module-rules');
+const getRules = require('./rules');
 
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const { EsbuildPlugin } = require('esbuild-loader');
 
 module.exports = webpackEnv => {
   const isProd = webpackEnv === 'production';
   return {
-    entry: pathConfig.appEntry, // 入口文件
+    entry: paths.appEntry, // 入口文件
     devtool: isProd ? 'hidden-source-map' : 'eval-cheap-module-source-map',
     // 输出配置
     output: {
-      path: pathConfig.appOutput,
-      publicPath: pathConfig.publicPath, //todo
+      path: paths.appOutput,
+      publicPath: paths.publicPath, //todo
       filename: isProd ? 'js/[name].[contenthash:8].js' : 'js/[name].js',
       chunkFilename: isProd ? 'js/[name].[contenthash:8].js' : 'js/[name].js',
       hashFunction: 'xxhash64', // 从 webpack v5.54.0+ 起，hashFunction 支持将 xxhash64 作为更快的算法，当启用 experiments.futureDefaults 时，此算法将被默认使用。
       clean: isProd // 清除 dist 目录， 代替 clean-webpack-plugin
     },
     resolve: {
-      extensions: pathConfig.moduleFileExtensions,
+      extensions: paths.moduleFileExtensions,
       alias: {
-        '@': pathConfig.appSrc
+        '@': paths.appSrc
       }
     },
     plugins: [
       new ESLintPlugin({
         extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx', 'vue'],
-        context: pathConfig.appSrc
+        context: paths.appSrc
       }),
       // todo
       new DefinePlugin({
@@ -47,29 +41,22 @@ module.exports = webpackEnv => {
         }
       }),
       new HtmlWebpackPlugin({
-        template: pathConfig.appHtml
+        template: paths.appHtml
       }),
       new VueLoaderPlugin(),
-      new FriendlyErrorsWebpackPlugin({
-        compilationSuccessInfo: {
-          messages: ['You application is running here http://localhost:8080']
-        }
-      })
+      new FriendlyErrorsWebpackPlugin(),
+      new ProgressPlugin()
     ],
     module: {
-      rules: [
-        ...assetRules,
-        ...getCssRules(isProd),
-        ...getScssRules(isProd),
-        ...vueRules,
-        ...jsRules,
-        ...tsRules
-      ]
+      rules: getRules(isProd)
     },
     // cache: {
     //   type: 'filesystem',
     //   allowCollectingMemory: true
     // },
+    optimization: {
+      minimizer: [new EsbuildPlugin({ target: 'es2015', css: true })]
+    },
     infrastructureLogging: {
       level: 'none'
     },

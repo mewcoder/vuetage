@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+
     "baseUrl": ".",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
@@ -26,17 +28,8 @@
     // Enforce using `import type` instead of `import` for types
     "importsNotUsedAsValues": "error",
 
-    // A few notes:
-    // - Vue 3 supports ES2016+
-    // - For Vite, the actual compilation target is determined by the
-    //   `build.target` option in the Vite config.
-    //   So don't change the `target` field here. It has to be
-    //   at least `ES2020` for dynamic `import()`s and `import.meta` to work correctly.
-    // - If you are not using Vite, feel free to override the `target` field.
-    "target": "ESNext",
-
     // Recommended
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
 
     // See <https://github.com/vuejs/vue-cli/pull/5688>

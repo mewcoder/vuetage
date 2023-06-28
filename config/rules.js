@@ -1,4 +1,7 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+/**
+ *  配置loader
+ */
 
 /* 静态资源 */
 const assetRules = [
@@ -39,10 +42,10 @@ const assetRules = [
       filename: 'fonts/[name].[hash:8][ext]'
     }
   }
-]
+];
 
 const getCssLoaders = isProd => {
-  const cssFinalLoader = isProd ? MiniCssExtractPlugin.loader : require.resolve('style-loader')
+  const cssFinalLoader = isProd ? MiniCssExtractPlugin.loader : require.resolve('style-loader');
 
   return [
     cssFinalLoader,
@@ -56,8 +59,8 @@ const getCssLoaders = isProd => {
       // todo
       loader: require.resolve('postcss-loader')
     }
-  ]
-}
+  ];
+};
 
 /* css */
 const getCssRules = isProd => {
@@ -66,8 +69,8 @@ const getCssRules = isProd => {
       test: /\.css$/,
       use: getCssLoaders(isProd)
     }
-  ]
-}
+  ];
+};
 
 /* scss */
 const getScssRules = isProd => {
@@ -81,8 +84,8 @@ const getScssRules = isProd => {
         }
       ]
     }
-  ]
-}
+  ];
+};
 
 /* vue */
 const vueRules = [
@@ -94,7 +97,7 @@ const vueRules = [
       }
     ]
   }
-]
+];
 
 /* js */
 
@@ -103,11 +106,10 @@ const jsRules = [
     test: /\.js$/,
     loader: require.resolve('esbuild-loader'),
     options: {
-      loader: 'js',
-      target: 'es2015'
+      loader: 'js'
     }
   }
-]
+];
 
 /* ts */
 const tsRules = [
@@ -118,13 +120,17 @@ const tsRules = [
       loader: 'ts'
     }
   }
-]
+];
 
-module.exports = {
-  assetRules,
-  getCssRules,
-  getScssRules,
-  vueRules,
-  jsRules,
-  tsRules
+function getRules(isProd) {
+  return [
+    ...assetRules,
+    ...getCssRules(isProd),
+    ...getScssRules(isProd),
+    ...vueRules,
+    ...jsRules,
+    ...tsRules
+  ];
 }
+
+module.exports = getRules;

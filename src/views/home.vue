@@ -1,10 +1,16 @@
 <template>
   <div class="home">
-    <h1>This is an home page</h1>
+    <img alt="Vue logo" src="@/assets/logo.svg" width="200" height="200" />
+    <HelloWorld msg="Welcome to Your Webpack5 + Vue2.7 App！" />
   </div>
 </template>
+
+<script lang="ts" setup>
+import HelloWorld from '@/components/HelloWorld.vue';
+</script>
+
 <script lang="ts">
 export default {
-  name: 'AboutView'
+  name: 'HomeView'
 };
 </script>

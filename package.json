@@ -20,6 +20,7 @@
     "eslint": "^8.43.0",
     "eslint-plugin-vue": "^9.15.1",
     "eslint-webpack-plugin": "^4.0.1",
+    "fork-ts-checker-webpack-plugin": "^8.0.0",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
     "postcss": "^8.4.24",
@@ -42,6 +43,7 @@
     "@vue/eslint-config-typescript": "^11.0.3",
     "axios": "^1.4.0",
     "pinia": "^2.1.4",
+    "remove": "^0.1.5",
     "vue": "^2.7.14",
     "vue-router": "^3.6.5",
     "vue-tsc": "^1.8.2"

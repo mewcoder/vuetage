@@ -3,10 +3,12 @@
     "module": "ESNext",
     "target": "ESNext",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
-
     "baseUrl": ".",
+
     "moduleResolution": "Node",
     "resolveJsonModule": true,
+
+    // class-field
     "useDefineForClassFields": true,
 
     "ignoreDeprecations": "5.0",

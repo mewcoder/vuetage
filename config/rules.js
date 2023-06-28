@@ -22,7 +22,7 @@ const assetRules = [
     },
     parser: {
       dataUrlCondition: {
-        maxSize: 1024 * 4
+        maxSize: 1024 * 4 // 4KB
       }
     }
   },

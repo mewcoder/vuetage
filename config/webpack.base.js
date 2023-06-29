@@ -8,6 +8,7 @@ const {
   ESLintPlugin,
   FriendlyErrorsWebpackPlugin
 } = require('./plugins');
+const { node } = require('webpack');
 
 module.exports = webpackEnv => {
   const isProd = webpackEnv === 'production';
@@ -61,19 +62,6 @@ module.exports = webpackEnv => {
         },
     optimization: {
       realContentHash: false // true 生成正确的内容 hash，耗费性能
-    },
-    stats: {
-      all: false,
-      // 生成资源信息
-      assets: true,
-      cachedAssets: true,
-      assetsSpace: 100,
-      assetsSort: '!size',
-      excludeAssets: [/index.html/, /favicon.ico/],
-      version: false,
-
-      publicPath: false // 显示公共路径
-      // entrypoints: false, // 显示 entry point
     }
   };
 };

@@ -48,5 +48,15 @@ module.exports = merge(baseConfig('production'), {
       test: /\.(js|css|html)$/,
       threshold: 10240
     })
-  ]
+  ],
+  stats: {
+    all: false,
+    // 生成资源信息
+    assets: true,
+    cachedAssets: true,
+    assetsSpace: 100,
+    assetsSort: '!size',
+    excludeAssets: [/index.html/, /favicon.ico/],
+    version: true
+  }
 });

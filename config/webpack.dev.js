@@ -4,11 +4,17 @@ module.exports = merge(baseConfig('development'), {
   mode: 'development',
   devServer: {
     client: {
-      logging: 'none'
+      logging: 'none',
+      overlay: {
+        errors: true,
+        warnings: false
+      },
+      progress: true
     },
-    compress: true // gzip压缩
+
+    compress: true, // gzip压缩
+    historyApiFallback: true // history路径在刷新出错时重定向开启
     // open: true,
-    // historyApiFallback: true, // history路径在刷新出错时重定向开启
     // static: 管理静态资源
     // proxy: { // 接口代理
     //   '/api': { // 统一api前缀都代理掉
@@ -23,5 +29,8 @@ module.exports = merge(baseConfig('development'), {
   optimization: {
     moduleIds: 'named',
     chunkIds: 'named'
+  },
+  stats: {
+    all: false
   }
 });

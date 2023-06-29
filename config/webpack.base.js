@@ -8,7 +8,8 @@ const {
   ESLintPlugin,
   FriendlyErrorsWebpackPlugin
 } = require('./plugins');
-const { node } = require('webpack');
+const getEnvironment = require('./env');
+
 
 module.exports = webpackEnv => {
   const isProd = webpackEnv === 'production';
@@ -33,12 +34,12 @@ module.exports = webpackEnv => {
     },
     plugins: [
       new VueLoaderPlugin(),
-      // new ESLintPlugin({
-      //   extensions: ['vue', 'js', 'mjs', 'ts'],
-      //   context: paths.appSrc,
-      //   cache: false,
-      //   lintDirtyModulesOnly: !isProd
-      // }),
+      new ESLintPlugin({
+        extensions: ['vue', 'js', 'mjs', 'ts'],
+        context: paths.appSrc,
+        cache: false,
+        lintDirtyModulesOnly: !isProd
+      }),
       // todo
       new DefinePlugin({
         'process.env': {

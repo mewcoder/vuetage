@@ -20,6 +20,7 @@ module.exports = {
   appPublic: resolveApp('public'),
   appSrc: resolveApp('src'),
   appHtml: resolveApp('public/index.html'),
+  dotenv: resolveApp('.env'),
   publicPath,
   moduleFileExtensions
 };

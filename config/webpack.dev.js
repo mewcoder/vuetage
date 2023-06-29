@@ -1,5 +1,5 @@
-const baseConfig = require('./webpack.base')
-const { merge } = require('webpack-merge')
+const baseConfig = require('./webpack.base');
+const { merge } = require('webpack-merge');
 module.exports = merge(baseConfig('development'), {
   mode: 'development',
   devServer: {
@@ -23,6 +23,5 @@ module.exports = merge(baseConfig('development'), {
   optimization: {
     moduleIds: 'named',
     chunkIds: 'named'
-  },
-
-})
+  }
+});

@@ -1,10 +1,11 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { getStyleLoaders } = require('./loaders');
+
 /**
- *  配置loader
+ *  配置rules & loaders
  */
 
 /* 静态资源 */
-const assetRules = [
+const getAssetRules = () => [
   // svg
   {
     test: /\.(svg)(\?.*)?$/,
@@ -44,38 +45,12 @@ const assetRules = [
   }
 ];
 
-const getCssLoaders = shouldExtract => {
-  const cssFinalLoader = shouldExtract
-    ? { loader: MiniCssExtractPlugin.loader }
-    : {
-        loader: require.resolve('vue-style-loader'),
-        options: {
-          sourceMap: false
-        }
-      };
-
-  return [
-    cssFinalLoader,
-    {
-      loader: require.resolve('css-loader'),
-      options: {
-        sourceMap: false,
-        importLoaders: 2
-      }
-    },
-    {
-      // todo autoprefixer
-      loader: require.resolve('postcss-loader')
-    }
-  ];
-};
-
 /* css */
 const getCssRules = isProd => {
   return [
     {
       test: /\.css$/,
-      use: getCssLoaders(isProd)
+      use: getStyleLoaders('css', isProd)
     }
   ];
 };
@@ -85,18 +60,13 @@ const getScssRules = isProd => {
   return [
     {
       test: /\.scss$/,
-      use: [
-        ...getCssLoaders(isProd),
-        {
-          loader: require.resolve('sass-loader')
-        }
-      ]
+      use: getStyleLoaders('scss', isProd)
     }
   ];
 };
 
 /* vue */
-const vueRules = [
+const getVueRules = () => [
   {
     test: /\.vue$/,
     use: [
@@ -107,20 +77,19 @@ const vueRules = [
             whitespace: 'condense' // 收缩模板中的空白字符
           }
         }
-      },
-      // https://github.com/vuejs/vue-loader/issues/1435#issuecomment-869074949
-      {
-        test: /\.vue$/,
-        resourceQuery: /type=style/,
-        sideEffects: true
       }
     ]
+  },
+  // for vue-style: https://github.com/vuejs/vue-loader/issues/1435#issuecomment-869074949
+  {
+    test: /\.vue$/,
+    resourceQuery: /type=style/,
+    sideEffects: true
   }
 ];
 
 /* js */
-
-const jsRules = [
+const getJsRules = () => [
   {
     test: /\.js$/,
     loader: require.resolve('esbuild-loader'),
@@ -131,7 +100,7 @@ const jsRules = [
 ];
 
 /* ts */
-const tsRules = [
+const getTsRules = () => [
   {
     test: /\.ts$/,
     loader: require.resolve('esbuild-loader'),
@@ -143,12 +112,12 @@ const tsRules = [
 
 function getRules(isProd) {
   return [
-    ...assetRules,
+    ...getVueRules(),
+    ...getAssetRules(),
     ...getCssRules(isProd),
     ...getScssRules(isProd),
-    ...vueRules,
-    ...jsRules,
-    ...tsRules
+    ...getJsRules(),
+    ...getTsRules()
   ];
 }
 

@@ -1,10 +1,7 @@
-const baseConfig = require('./webpack.base');
 const paths = require('./paths');
 const { merge } = require('webpack-merge');
-const CopyPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
-const WebpackBar = require('webpackbar');
+const baseConfig = require('./webpack.base');
+const { CopyPlugin, MiniCssExtractPlugin, CompressionPlugin } = require('./plugins');
 
 module.exports = merge(baseConfig('production'), {
   mode: 'production',
@@ -33,7 +30,6 @@ module.exports = merge(baseConfig('production'), {
       test: /\.(js|css|html)$/,
       threshold: 10240
     })
-
     // new WebpackBar({
     //   reporters: ['profile'],
     //   profile: true

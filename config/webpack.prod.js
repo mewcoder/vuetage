@@ -7,7 +7,25 @@ module.exports = merge(baseConfig('production'), {
   mode: 'production',
   optimization: {
     moduleIds: 'deterministic', // 默认参数
-    chunkIds: 'deterministic' // 默认参数
+    chunkIds: 'deterministic', // 默认参数
+    minimizer: [new EsbuildPlugin({ target: 'es2015', css: true })], // 代替terser
+    splitChunks: {
+      cacheGroups: {
+        defaultVendors: {
+          name: 'chunk-vendors',
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          chunks: 'initial'
+        },
+        common: {
+          name: 'chunk-common',
+          minChunks: 2,
+          priority: -20,
+          chunks: 'initial',
+          reuseExistingChunk: true
+        }
+      }
+    }
   },
   plugins: [
     new CopyPlugin({

@@ -11,7 +11,7 @@ const outputPath = process.env.OUTPUT_PATH || 'dist';
 
 const publicPath = process.env.PUBLIC_URL || '/';
 
-const moduleFileExtensions = ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.vue', '.json'];
+const moduleFileExtensions = ['.js', '.mjs', '.ts', '.vue', '.json'];
 
 module.exports = {
   appPath: resolveApp('.'),

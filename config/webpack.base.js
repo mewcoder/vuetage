@@ -28,13 +28,15 @@ module.exports = webpackEnv => {
       extensions: paths.moduleFileExtensions,
       alias: {
         '@': paths.appSrc
-      }
+      },
+      symlinks: false // 提升性能
     },
     plugins: [
       new VueLoaderPlugin(),
       new ESLintPlugin({
         extensions: ['vue', 'js', 'mjs', 'ts'],
-        context: paths.appSrc
+        context: paths.appSrc,
+        lintDirtyModulesOnly: !isProd
       }),
       // todo
       new DefinePlugin({
@@ -52,13 +54,13 @@ module.exports = webpackEnv => {
     module: {
       rules: getRules(isProd)
     },
-    // cache: {
-    //   type: 'filesystem',
-    //   allowCollectingMemory: true
-    // },
+    cache: {
+      type: isProd ? false : 'filesystem',
+      allowCollectingMemory: true
+    },
     optimization: {
-      realContentHash: false, // true 生成正确的内容hash
-      minimizer: [new EsbuildPlugin({ target: 'es2015', css: true })]
+      realContentHash: false // true 生成正确的内容 hash，耗费性能
+      // minimizer: [new EsbuildPlugin({ target: 'es2015', css: true })] // 代替terser
     },
     infrastructureLogging: {
       level: 'none'

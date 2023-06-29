@@ -50,7 +50,8 @@ const getCssRules = isProd => {
   return [
     {
       test: /\.css$/,
-      use: getStyleLoaders('css', isProd)
+      use: getStyleLoaders('css', isProd),
+      sideEffects: true
     }
   ];
 };
@@ -60,7 +61,8 @@ const getScssRules = isProd => {
   return [
     {
       test: /\.scss$/,
-      use: getStyleLoaders('scss', isProd)
+      use: getStyleLoaders('scss', isProd),
+      sideEffects: true
     }
   ];
 };

@@ -10,7 +10,7 @@ export default {
 
 <template>
   <div class="home">
-    <img alt="Vue logo" src="@/assets/logo.svg" width="200" height="200" />
+    <img alt="Vue logo" src="@/assets/logo.png" height="200" />
     <HelloWorld msg="Welcome to Your Webpack5 + Vue2.7 App！" />
   </div>
 </template>

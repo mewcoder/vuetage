@@ -11,6 +11,7 @@
 <style lang="scss">
 #app {
   text-align: center;
+  background-color: #fff;
 }
 nav {
   padding: 30px;

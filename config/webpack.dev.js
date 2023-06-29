@@ -6,8 +6,8 @@ module.exports = merge(baseConfig('development'), {
     client: {
       logging: 'none'
     },
-    open: true,
     compress: true // gzip压缩
+    // open: true,
     // historyApiFallback: true, // history路径在刷新出错时重定向开启
     // static: 管理静态资源
     // proxy: { // 接口代理

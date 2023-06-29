@@ -5,7 +5,6 @@ const {
   ProgressPlugin,
   HtmlWebpackPlugin,
   VueLoaderPlugin,
-  EsbuildPlugin,
   ESLintPlugin,
   FriendlyErrorsWebpackPlugin
 } = require('./plugins');
@@ -33,11 +32,12 @@ module.exports = webpackEnv => {
     },
     plugins: [
       new VueLoaderPlugin(),
-      new ESLintPlugin({
-        extensions: ['vue', 'js', 'mjs', 'ts'],
-        context: paths.appSrc,
-        lintDirtyModulesOnly: !isProd
-      }),
+      // new ESLintPlugin({
+      //   extensions: ['vue', 'js', 'mjs', 'ts'],
+      //   context: paths.appSrc,
+      //   cache: false,
+      //   lintDirtyModulesOnly: !isProd
+      // }),
       // todo
       new DefinePlugin({
         'process.env': {
@@ -54,17 +54,26 @@ module.exports = webpackEnv => {
     module: {
       rules: getRules(isProd)
     },
-    cache: {
-      type: isProd ? false : 'filesystem',
-      allowCollectingMemory: true
-    },
+    cache: isProd
+      ? false
+      : {
+          type: 'filesystem'
+        },
     optimization: {
       realContentHash: false // true 生成正确的内容 hash，耗费性能
-      // minimizer: [new EsbuildPlugin({ target: 'es2015', css: true })] // 代替terser
     },
-    infrastructureLogging: {
-      level: 'none'
-    },
-    stats: 'none'
+    stats: {
+      all: false,
+      // 生成资源信息
+      assets: true,
+      cachedAssets: true,
+      assetsSpace: 100,
+      assetsSort: '!size',
+      excludeAssets: [/index.html/, /favicon.ico/],
+      version: false,
+
+      publicPath: false // 显示公共路径
+      // entrypoints: false, // 显示 entry point
+    }
   };
 };

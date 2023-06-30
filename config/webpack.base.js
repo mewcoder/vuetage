@@ -35,12 +35,12 @@ module.exports = webpackEnv => {
     },
     plugins: [
       new VueLoaderPlugin(),
-      // new ESLintPlugin({
-      //   extensions: ['vue', 'js', 'mjs', 'ts'],
-      //   context: paths.appSrc,
-      //   cache: false,
-      //   lintDirtyModulesOnly: !isProd
-      // }),
+      new ESLintPlugin({
+        extensions: ['vue', 'js', 'mjs', 'ts'],
+        context: paths.appSrc,
+        cache: false,
+        lintDirtyModulesOnly: !isProd
+      }),
       new DefinePlugin(getClientEnv()),
       new HtmlWebpackPlugin({
         title: paths.appTitle,

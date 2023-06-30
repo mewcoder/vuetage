@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "webpack5 + vue2.7 template",
   "scripts": {
-    "dev": "webpack serve --env development --config ./config/webpack.dev.js",
+    "dev": "webpack serve --env development",
     "build": "run-p type-check build-only",
-    "build-only": "webpack --env production --config ./config/webpack.prod.js",
+    "build-only": "webpack --env production",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .js,.mjs,.ts,.vue --fix --ignore-path .gitignore"
   },

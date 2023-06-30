@@ -1,5 +1,6 @@
 const { getStyleLoaders } = require('./loaders');
-
+const paths = require('./paths');
+const { genAssetPath } = require('./utils');
 /**
  *  配置rules & loaders
  */
@@ -11,7 +12,7 @@ const getAssetRules = () => [
     test: /\.(svg)(\?.*)?$/,
     type: 'asset/resource', // file-loader
     generator: {
-      filename: 'img/[name].[hash:8][ext]'
+      filename: genAssetPath('img')
     }
   },
   // images
@@ -19,7 +20,7 @@ const getAssetRules = () => [
     test: /\.(png|jpe?g|gif|webp|avif)(\?.*)?$/,
     type: 'asset', // file-loader - {maxSize} - url-loader
     generator: {
-      filename: 'img/[name].[hash:8][ext]'
+      filename: genAssetPath('img')
     },
     parser: {
       dataUrlCondition: {
@@ -32,7 +33,7 @@ const getAssetRules = () => [
     test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
     type: 'asset',
     generator: {
-      filename: 'media/[name].[hash:8][ext]'
+      filename: genAssetPath('media')
     }
   },
   // fonts
@@ -40,7 +41,7 @@ const getAssetRules = () => [
     test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
     type: 'asset',
     generator: {
-      filename: 'fonts/[name].[hash:8][ext]'
+      filename: genAssetPath('fonts')
     }
   }
 ];

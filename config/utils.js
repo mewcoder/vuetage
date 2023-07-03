@@ -38,10 +38,33 @@ const removeSlash = path => {
   return path.replace(/^\/*|\/*$/g, '');
 };
 
+/**
+ * @desc 读取配置
+ */
+function getProxyRouterConfig() {
+  /**
+   * @desc .proxyrc 配置文件说明
+   * @param {*} target 要使用的目标地址，可以是routes中的key或地址
+   * @param {*} routes 常用的后端服务地址
+   * @param {*} token
+   * @param {*} cookie
+   */
+  const configPath = '../.proxyrc';
+
+  try {
+    const jsonStr = fs.readFileSync(path.resolve(__dirname, configPath), 'utf-8');
+    const confg = JSON.parse(jsonStr);
+    return confg;
+  } catch {
+    console.log('get .proxyrc failed');
+  }
+}
+
 module.exports = {
   resolveApp,
   genAssetPath,
   ensureEndSlash,
   removeEndSlash,
-  removeSlash
+  removeSlash,
+  getProxyRouterConfig
 };

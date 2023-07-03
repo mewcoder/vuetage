@@ -56,7 +56,11 @@ module.exports = () => {
         test: /\.(js|css|html)$/,
         threshold: 10240
       }),
-      new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: 'false' })
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        openAnalyzer: false,
+        logLevel: 'warn'
+      })
     ],
     stats: {
       all: false,
@@ -65,7 +69,6 @@ module.exports = () => {
       cachedAssets: true,
       assetsSpace: 100,
       assetsSort: '!size',
-      excludeAssets: [/index.html/, /favicon.ico/],
       version: true
     }
   });

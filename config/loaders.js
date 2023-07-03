@@ -4,9 +4,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
  *
  * @param {*} type css|sass
  * @param {*} extract 分离css文件
- * @param {*} options
  */
-function getStyleLoaders(type, extract, options) {
+function getStyleLoaders(type, extract) {
   const cssFinalLoader = extract
     ? {
         loader: MiniCssExtractPlugin.loader,

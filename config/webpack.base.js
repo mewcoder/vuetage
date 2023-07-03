@@ -7,7 +7,9 @@ const {
   HtmlWebpackPlugin,
   VueLoaderPlugin,
   ESLintPlugin,
-  FriendlyErrorsWebpackPlugin
+  FriendlyErrorsWebpackPlugin,
+  IgnorePlugin,
+  CaseSensitivePathsPlugin
 } = require('./plugins');
 const paths = require('./paths');
 const { genAssetPath } = require('./utils');
@@ -54,7 +56,12 @@ module.exports = webpackEnv => {
       new ProgressPlugin(),
       new ProvidePlugin({
         process: 'process/browser' // fix: Uncaught ReferenceError: process is not defined
-      })
+      }),
+      new IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/
+      }),
+      new CaseSensitivePathsPlugin()
     ],
     module: {
       rules: getRules(isProd)

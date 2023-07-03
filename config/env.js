@@ -46,7 +46,7 @@ function getClientEnv(raw) {
   for (const key in env) {
     env[key] = JSON.stringify(env[key]);
   }
-  console.log(env);
+
   return {
     'process.env': env
   };

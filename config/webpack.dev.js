@@ -24,7 +24,7 @@ module.exports = () => {
       historyApiFallback: {
         index: paths.getPublicPath()
       },
-      // open: [paths.getPublicPath()],
+      open: [paths.getPublicPath()],
       proxy
     },
     optimization: {

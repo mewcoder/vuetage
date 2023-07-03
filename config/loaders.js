@@ -30,7 +30,7 @@ function getStyleLoaders(type, extract) {
       }
     },
     {
-      loader: require.resolve('postcss-loader'),
+      loader: require.resolve('postcss-loader'), // 配置在 postcss.config.js
       options: {
         sourceMap: false
       }

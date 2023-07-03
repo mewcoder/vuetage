@@ -105,13 +105,8 @@ const getJsRules = () => [
     loader: require.resolve('esbuild-loader'),
     exclude: /node_modules/,
     options: {
-      loader: 'js'
-    }
-  },
-  {
-    test: /\.m?js/,
-    resolve: {
-      fullySpecified: false
+      loader: 'js',
+      target: 'es2015'
     }
   }
 ];
@@ -122,7 +117,8 @@ const getTsRules = () => [
     test: /\.ts$/,
     loader: require.resolve('esbuild-loader'),
     options: {
-      loader: 'ts'
+      loader: 'ts',
+      target: 'es2015'
     }
   }
 ];

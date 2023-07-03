@@ -1,7 +1,13 @@
 const paths = require('./paths');
 const { merge } = require('webpack-merge');
 const baseConfig = require('./webpack.base');
-const { CopyPlugin, MiniCssExtractPlugin, CompressionPlugin, EsbuildPlugin } = require('./plugins');
+const {
+  CopyPlugin,
+  MiniCssExtractPlugin,
+  CompressionPlugin,
+  EsbuildPlugin,
+  BundleAnalyzerPlugin
+} = require('./plugins');
 const { genAssetPath } = require('./utils');
 
 module.exports = () => {
@@ -49,7 +55,8 @@ module.exports = () => {
         algorithm: 'gzip',
         test: /\.(js|css|html)$/,
         threshold: 10240
-      })
+      }),
+      new BundleAnalyzerPlugin({ analyzerMode: 'static', openAnalyzer: 'false' })
     ],
     stats: {
       all: false,

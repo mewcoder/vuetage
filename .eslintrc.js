@@ -11,5 +11,11 @@ module.exports = {
   ],
   env: {
     node: true
+  },
+  rules: {
+    'no-console': 'off',
+    'prefer-const': 'warn',
+    'no-var': 'warn',
+    'no-unused-vars': 'warn'
   }
 };

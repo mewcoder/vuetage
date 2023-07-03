@@ -1,5 +1,4 @@
 const { getStyleLoaders } = require('./loaders');
-const paths = require('./paths');
 const { genAssetPath } = require('./utils');
 /**
  *  配置rules & loaders
@@ -10,10 +9,18 @@ const getAssetRules = () => [
   // svg
   {
     test: /\.(svg)(\?.*)?$/,
-    type: 'asset/resource', // file-loader
-    generator: {
-      filename: genAssetPath('img')
-    }
+    oneOf: [
+      {
+        resourceQuery: /raw/,
+        type: 'asset/source' // raw-loader
+      },
+      {
+        type: 'asset/resource', // file-loader
+        generator: {
+          filename: genAssetPath('img')
+        }
+      }
+    ]
   },
   // images
   {
@@ -94,10 +101,17 @@ const getVueRules = () => [
 /* js */
 const getJsRules = () => [
   {
-    test: /\.js$/,
+    test: /\.m?js$/,
     loader: require.resolve('esbuild-loader'),
+    exclude: /node_modules/,
     options: {
       loader: 'js'
+    }
+  },
+  {
+    test: /\.m?js/,
+    resolve: {
+      fullySpecified: false
     }
   }
 ];

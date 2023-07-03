@@ -1,18 +1,15 @@
 const baseConfig = require('./webpack.base');
 const { merge } = require('webpack-merge');
 const paths = require('./paths');
+const { getRouter, getReq } = require('./proxy');
 
 module.exports = () => {
   return merge(baseConfig('development'), {
     mode: 'development',
     devServer: {
-      host: '0.0.0.0',
       client: {
         logging: 'none',
-        overlay: {
-          errors: true,
-          warnings: false
-        },
+        overlay: false,
         progress: true
       },
       static: {
@@ -23,16 +20,18 @@ module.exports = () => {
       historyApiFallback: {
         index: paths.getPublicPath() + 'index.html'
       },
-      open: [paths.getPublicPath()],
+      // open: [paths.getPublicPath()],
       proxy: {
-        // '/api': {
-        //   target: 'http://api.github.com',
-        //   changeOrigin: true,
-        //   secure: false,
-        //   pathRewrite: {
-        //     '/api': ''
-        //   }
-        // }
+        '/api': {
+          target: 'http://api.github.com',
+          changeOrigin: true,
+          secure: false,
+          router: getRouter,
+          onProxyReq: getReq
+          // pathRewrite: {
+          //   '/api': ''
+          // }
+        }
       }
     },
     optimization: {

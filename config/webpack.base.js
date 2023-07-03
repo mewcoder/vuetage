@@ -3,6 +3,7 @@ const getRules = require('./rules');
 const {
   DefinePlugin,
   ProgressPlugin,
+  ProvidePlugin,
   HtmlWebpackPlugin,
   VueLoaderPlugin,
   ESLintPlugin,
@@ -29,7 +30,8 @@ module.exports = webpackEnv => {
     resolve: {
       extensions: paths.moduleFileExtensions,
       alias: {
-        '@': paths.appSrc
+        '@': paths.appSrc,
+        vue$: 'vue/dist/vue.esm.js' // fix:$attrs is readonly / $listeners is readonly
       },
       symlinks: false // 提升性能
     },
@@ -38,7 +40,7 @@ module.exports = webpackEnv => {
       new ESLintPlugin({
         extensions: ['vue', 'js', 'mjs', 'ts'],
         context: paths.appSrc,
-        cache: false,
+        cache: !isProd,
         lintDirtyModulesOnly: !isProd
       }),
       new DefinePlugin(getClientEnv()),
@@ -49,18 +51,17 @@ module.exports = webpackEnv => {
         templateParameters: getClientEnv(true)
       }),
       new FriendlyErrorsWebpackPlugin(),
-      new ProgressPlugin()
+      new ProgressPlugin(),
+      new ProvidePlugin({
+        process: 'process/browser' // fix: Uncaught ReferenceError: process is not defined
+      })
     ],
     module: {
       rules: getRules(isProd)
     },
-    cache: isProd
-      ? false
-      : {
-          type: 'filesystem'
-        },
     optimization: {
       realContentHash: false // true 生成正确的内容 hash，耗费性能
-    }
+    },
+    performance: false
   };
 };

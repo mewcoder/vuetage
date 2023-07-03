@@ -1,0 +1,8 @@
+{
+  "target": "github",
+  "routes": {
+    "github": "http://api.github.com"
+  },
+  "token": "",
+  "cookie": ""
+}

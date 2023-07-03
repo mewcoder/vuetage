@@ -21,6 +21,7 @@
     // This enables stricter inference for data properties on `this`.
     "noImplicitThis": true,
     "strict": true,
+    "allowJs":true,
 
     // esbuild
     "isolatedModules": true,

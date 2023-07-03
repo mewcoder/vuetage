@@ -16,11 +16,13 @@ module.exports = () => {
         directory: paths.appPublic,
         publicPath: paths.getPublicPath()
       },
+      devMiddleware: {
+        // remove last slash so user can land on `/test` instead of `/test/`
+        publicPath: paths.getPublicPath().slice(0, -1)
+      },
       // history路径在刷新出错时重定向开启
       historyApiFallback: {
-        index: paths.getPublicPath(),
-        // https://github.com/facebook/create-react-app/issues/387.
-        disableDotRule: true
+        index: paths.getPublicPath()
       },
       // open: [paths.getPublicPath()],
       proxy

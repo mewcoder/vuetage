@@ -14,8 +14,6 @@ module.exports = () => {
   return merge(baseConfig('production'), {
     mode: 'production',
     optimization: {
-      moduleIds: 'deterministic', // 默认参数
-      chunkIds: 'deterministic', // 默认参数
       minimizer: [new EsbuildPlugin({ css: true })], // 代替terser
       splitChunks: {
         cacheGroups: {

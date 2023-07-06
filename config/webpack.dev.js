@@ -27,10 +27,6 @@ module.exports = () => {
       open: [paths.getPublicPath()],
       proxy
     },
-    optimization: {
-      moduleIds: 'named',
-      chunkIds: 'named'
-    },
     stats: {
       all: false
     }

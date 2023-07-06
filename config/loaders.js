@@ -15,9 +15,7 @@ function getStyleLoaders(type, extract) {
       }
     : {
         loader: require.resolve('vue-style-loader'),
-        options: {
-          sourceMap: false
-        }
+        options: {}
       };
 
   const rules = [
@@ -25,15 +23,12 @@ function getStyleLoaders(type, extract) {
     {
       loader: require.resolve('css-loader'),
       options: {
-        sourceMap: false,
         importLoaders: 2
       }
     },
     {
       loader: require.resolve('postcss-loader'), // 配置在 postcss.config.js
-      options: {
-        sourceMap: false
-      }
+      options: {}
     }
   ];
 

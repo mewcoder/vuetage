@@ -19,7 +19,7 @@ module.exports = webpackEnv => {
 
   return {
     entry: paths.appEntry, // 入口文件
-    devtool: isProd ? 'hidden-source-map' : 'eval-cheap-module-source-map',
+    devtool: isProd ? 'nosources-source-map' : 'eval-cheap-module-source-map',
     // 输出配置
     output: {
       path: paths.appOutput,

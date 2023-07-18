@@ -21,7 +21,7 @@
     // This enables stricter inference for data properties on `this`.
     "noImplicitThis": true,
     "strict": true,
-    "allowJs":true,
+    "allowJs": true,
 
     // esbuild
     "isolatedModules": true,
@@ -39,12 +39,12 @@
     "skipLibCheck": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["jest"]
   },
-
   "vueCompilerOptions": {
     "target": 2.7
   },
-  "include": ["src/**/*", "src/**/*.vue"],
+  "include": ["src/**/*", "src/**/*.vue", "tests/**/*"],
   "exclude": ["node_modules"]
 }

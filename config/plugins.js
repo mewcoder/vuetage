@@ -15,6 +15,7 @@ const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugi
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const WriteHashPlugin = require('./lib/write-hash-plugin');
 module.exports = {
   IgnorePlugin,
   DefinePlugin,
@@ -29,5 +30,6 @@ module.exports = {
   ESLintPlugin,
   FriendlyErrorsWebpackPlugin,
   BundleAnalyzerPlugin,
-  CaseSensitivePathsPlugin
+  CaseSensitivePathsPlugin,
+  WriteHashPlugin
 };

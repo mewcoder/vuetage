@@ -6,6 +6,7 @@ const {
   MiniCssExtractPlugin,
   CompressionPlugin,
   EsbuildPlugin,
+  WriteHashPlugin,
   BundleAnalyzerPlugin
 } = require('./plugins');
 const { genAssetPath } = require('./utils');
@@ -34,6 +35,7 @@ module.exports = () => {
       }
     },
     plugins: [
+      new WriteHashPlugin(),
       new CopyPlugin({
         patterns: [
           {
@@ -46,19 +48,19 @@ module.exports = () => {
         ]
       }),
       new MiniCssExtractPlugin({
-        filename: genAssetPath('css'),
-        chunkFilename: genAssetPath('css')
+        filename: genAssetPath('css', true),
+        chunkFilename: genAssetPath('css', true)
       }),
       new CompressionPlugin({
         algorithm: 'gzip',
         test: /\.(js|css|html)$/,
         threshold: 10240
-      }),
-      new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        openAnalyzer: false,
-        logLevel: 'warn'
       })
+      // new BundleAnalyzerPlugin({
+      //   analyzerMode: 'static',
+      //   openAnalyzer: false,
+      //   logLevel: 'warn'
+      // })
     ],
     stats: {
       all: false,

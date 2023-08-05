@@ -52,12 +52,31 @@ function getProxyRouterConfig() {
   const configPath = '../.proxyrc';
 
   try {
-    const jsonStr = fs.readFileSync(path.resolve(__dirname, configPath), 'utf-8');
+    const jsonStr = fs.readFileSync(
+      path.resolve(__dirname, configPath),
+      'utf-8'
+    );
     const confg = JSON.parse(jsonStr);
     return confg;
   } catch {
     console.log('get .proxyrc failed');
   }
+}
+
+function updateJsonFile(filePath, key, newValue) {
+  let jsonData = {};
+
+  // 如果文件存在，读取文件内容
+  if (fs.existsSync(filePath)) {
+    const jsonContent = fs.readFileSync(filePath, 'utf8');
+    jsonData = JSON.parse(jsonContent);
+  }
+
+  // 更新指定的 key
+  jsonData[key] = newValue;
+
+  // 将更新后的 JSON 数据写回文件
+  fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2));
 }
 
 module.exports = {
@@ -66,5 +85,6 @@ module.exports = {
   ensureEndSlash,
   removeEndSlash,
   removeSlash,
-  getProxyRouterConfig
+  getProxyRouterConfig,
+  updateJsonFile
 };

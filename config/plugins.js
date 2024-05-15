@@ -15,6 +15,7 @@ const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugi
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const WriteHashPlugin = require('./lib/write-hash-plugin');
 const WebpackBar = require('webpackbar');
 const LogServerAddress = require('./lib/log-server-address');
 
@@ -34,5 +35,6 @@ module.exports = {
   BundleAnalyzerPlugin,
   CaseSensitivePathsPlugin,
   WebpackBar,
-  LogServerAddress
+  LogServerAddress,
+  WriteHashPlugin
 };

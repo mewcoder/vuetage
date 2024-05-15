@@ -15,7 +15,7 @@ module.exports = () => {
   return merge(baseConfig('production'), {
     mode: 'production',
     optimization: {
-      minimizer: [new EsbuildPlugin({ css: true })], // 代替terser
+      minimizer: [new EsbuildPlugin({ target: 'chrome73' })], // 代替terser
       splitChunks: {
         cacheGroups: {
           defaultVendors: {
@@ -35,7 +35,7 @@ module.exports = () => {
       }
     },
     plugins: [
-      new WriteHashPlugin(),
+      // new WriteHashPlugin(),
       new CopyPlugin({
         patterns: [
           {

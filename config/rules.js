@@ -1,4 +1,3 @@
-const path = require('path');
 const { getStyleLoaders } = require('./loaders');
 const { genAssetPath, resolveApp } = require('./utils');
 
@@ -17,6 +16,14 @@ const getAssetRules = () => [
         type: 'asset/source' // raw-loader
       },
       {
+        // 不内联不hash
+        resourceQuery: /file/,
+        type: 'asset/resource',
+        generator: {
+          filename: genAssetPath('img', false)
+        }
+      },
+      {
         type: 'asset/resource', // file-loader
         generator: {
           filename: genAssetPath('img')
@@ -27,15 +34,32 @@ const getAssetRules = () => [
   // images
   {
     test: /\.(png|jpe?g|gif|webp|avif)(\?.*)?$/,
-    type: 'asset', // file-loader - {maxSize} - url-loader
-    generator: {
-      filename: genAssetPath('img')
-    },
-    parser: {
-      dataUrlCondition: {
-        maxSize: 1024 * 4 // 4KB
+    oneOf: [
+      {
+        // 内联
+        resourceQuery: /inline/,
+        type: 'asset/inline'
+      },
+      {
+        // 不内联不hash
+        resourceQuery: /file/,
+        type: 'asset/resource',
+        generator: {
+          filename: genAssetPath('img', false)
+        }
+      },
+      {
+        type: 'asset', //  url-loader - {maxSize} -  file-loader
+        generator: {
+          filename: genAssetPath('img')
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 4 * 1024 // 4kb
+          }
+        }
       }
-    }
+    ]
   },
   // media
   {
@@ -102,7 +126,7 @@ const getVueRules = () => [
 
 const browserTarget = 'chrome73';
 
-// const transpileDependencies = //;
+// const transpileDependencies = /xxx/;
 
 // 返回 true 过滤
 const jsExclude = filepath => {

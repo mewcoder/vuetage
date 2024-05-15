@@ -23,9 +23,9 @@ const routerConfig = {
  * @desc 加headers
  */
 function getReq(proxyReq) {
-  const { cookie, token } = routerConfig;
-  proxyReq.setHeader('X-CSRF-TOKEN', token);
-  proxyReq.setHeader('Cookie', cookie);
+  // const { cookie, token } = routerConfig;
+  // proxyReq.setHeader('X-CSRF-TOKEN', token);
+  // proxyReq.setHeader('Cookie', cookie);
 }
 
 /**

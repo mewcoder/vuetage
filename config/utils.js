@@ -20,7 +20,10 @@ const genAssetPath = (type, hash) => {
     );
   }
   // images media fonts
-  return getPath(paths.getAssetsPath(), `${type}/[name].[hash:8][ext]`);
+  return getPath(
+    paths.getAssetsPath(),
+    `${type}/[name]${hash ? '.[hash:8]' : ''}[ext]`
+  );
 };
 
 // 确保 path 以 / 结尾

@@ -1,8 +1,7 @@
 const { getClientEnv } = require('./env');
-const getRules = require('./rules');
+const { getRules } = require('./rules');
 const {
   DefinePlugin,
-  ProgressPlugin,
   ProvidePlugin,
   HtmlWebpackPlugin,
   VueLoaderPlugin,
@@ -16,10 +15,11 @@ const { genAssetPath } = require('./utils');
 
 module.exports = webpackEnv => {
   const isProd = webpackEnv === 'production';
-
   return {
     entry: paths.appEntry, // 入口文件
-    devtool: isProd ? 'nosources-source-map' : 'eval-cheap-module-source-map',
+    // https://github.com/vuejs/vue/issues/12689   部分 vue 文件 source-map 可能会定位不准,修改 vue-loader 源码，使用 patch-package 解决
+    devtool: isProd ? false : 'eval-cheap-module-source-map',
+    target: 'web', // https://github.com/vuejs/vue-loader/issues/1795
     // 输出配置
     output: {
       path: paths.appOutput,
@@ -43,6 +43,8 @@ module.exports = webpackEnv => {
         extensions: ['vue', 'js', 'mjs', 'ts'],
         context: paths.appSrc,
         cache: !isProd,
+        emitWarning: true,
+        failOnError: false,
         lintDirtyModulesOnly: !isProd
       }),
       new DefinePlugin(getClientEnv()),
@@ -52,8 +54,9 @@ module.exports = webpackEnv => {
         filename: 'index.html',
         templateParameters: getClientEnv(true)
       }),
-      new FriendlyErrorsWebpackPlugin(),
-      new ProgressPlugin(),
+      new FriendlyErrorsWebpackPlugin({
+        clearConsole: false
+      }),
       new ProvidePlugin({
         process: 'process/browser' // fix: Uncaught ReferenceError: process is not defined
       }),
@@ -64,10 +67,8 @@ module.exports = webpackEnv => {
       new CaseSensitivePathsPlugin()
     ],
     module: {
+      noParse: /^(vue|vue-router|pinia|vue-i18n|axios)$/,
       rules: getRules(isProd)
-    },
-    optimization: {
-      realContentHash: false // true 生成正确的内容 hash，耗费性能
     },
     performance: false
   };

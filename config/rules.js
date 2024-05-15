@@ -1,5 +1,7 @@
+const path = require('path');
 const { getStyleLoaders } = require('./loaders');
-const { genAssetPath } = require('./utils');
+const { genAssetPath, resolveApp } = require('./utils');
+
 /**
  *  配置rules & loaders
  */
@@ -65,11 +67,11 @@ const getCssRules = isProd => {
 };
 
 /* scss */
-const getScssRules = isProd => {
+const getScssRules = (isProd, preOptions = {}) => {
   return [
     {
       test: /\.scss$/,
-      use: getStyleLoaders('scss', isProd),
+      use: getStyleLoaders('scss', isProd, preOptions),
       sideEffects: true
     }
   ];
@@ -98,27 +100,42 @@ const getVueRules = () => [
   }
 ];
 
+const browserTarget = 'chrome73';
+
+// const transpileDependencies = //;
+
+// 返回 true 过滤
+const jsExclude = filepath => {
+  if (!filepath) return false;
+  if (/\.vue\.jsx?$/.test(filepath)) return true;
+  // if (transpileDependencies.test(filepath)) return false;
+  return /node_modules/.test(filepath);
+};
+
 /* js */
-const getJsRules = () => [
+const getJsRules = isProd => [
   {
     test: /\.m?js$/,
     loader: require.resolve('esbuild-loader'),
-    exclude: /node_modules/,
+    include: [resolveApp('src')],
+    exclude: jsExclude,
     options: {
       loader: 'js',
-      target: 'es2015'
+      target: isProd ? browserTarget : 'esnext'
     }
   }
 ];
 
 /* ts */
-const getTsRules = () => [
+const getTsRules = isProd => [
   {
     test: /\.ts$/,
     loader: require.resolve('esbuild-loader'),
+    include: [resolveApp('src')],
+    exclude: /node_modules/,
     options: {
       loader: 'ts',
-      target: 'es2015'
+      target: isProd ? browserTarget : 'esnext'
     }
   }
 ];
@@ -129,9 +146,17 @@ function getRules(isProd) {
     ...getAssetRules(),
     ...getCssRules(isProd),
     ...getScssRules(isProd),
-    ...getJsRules(),
-    ...getTsRules()
+    ...getJsRules(isProd),
+    ...getTsRules(isProd)
   ];
 }
 
-module.exports = getRules;
+function getStyleRules(isProd, preOptions) {
+  return [
+    ...getAssetRules(),
+    ...getCssRules(isProd),
+    ...getScssRules(isProd, preOptions)
+  ];
+}
+
+module.exports = { getRules, getStyleRules };

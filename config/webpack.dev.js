@@ -2,6 +2,11 @@ const baseConfig = require('./webpack.base');
 const { merge } = require('webpack-merge');
 const paths = require('./paths');
 const proxy = require('./devserver-proxy');
+const { LogServerAddress, WebpackBar } = require('./plugins');
+
+let port = 8080;
+
+const getPort = () => port;
 
 module.exports = () => {
   return merge(baseConfig('development'), {
@@ -10,7 +15,7 @@ module.exports = () => {
       client: {
         logging: 'none',
         overlay: false,
-        progress: true
+        progress: false
       },
       static: {
         directory: paths.appPublic,
@@ -24,8 +29,19 @@ module.exports = () => {
       historyApiFallback: {
         index: paths.getPublicPath()
       },
-      open: [paths.getPublicPath()],
-      proxy
+      open: false,
+      proxy,
+      onListening: devServer => {
+        if (!devServer) return;
+        port = devServer.server.address().port;
+      }
+    },
+    plugins: [new LogServerAddress(getPort), new WebpackBar()],
+    cache: {
+      type: 'filesystem'
+    },
+    infrastructureLogging: {
+      level: 'none' // 关闭日志
     },
     stats: {
       all: false

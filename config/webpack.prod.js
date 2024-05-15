@@ -68,7 +68,7 @@ module.exports = () => {
       assets: true,
       cachedAssets: true,
       assetsSpace: 100,
-      assetsSort: '!size',
+      assetsSort: 'chunks',
       version: true
     }
   });
